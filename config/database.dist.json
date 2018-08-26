@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "root",
+    "password": "changeMe",
+    "database": "database_development",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "database": "database_test",
+    "dialect": "sqlite",
+    "storage": "test.db",
+    "operatorsAliases": false,
+    "logging": false
+  },
+  "production": {
+    "username": "root",
+    "password": "changeMe",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
