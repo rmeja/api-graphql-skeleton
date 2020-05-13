@@ -177,13 +177,16 @@ describe('src/resolvers/account.js', function () {
       });
     });
 
-    it('accountDelete() should throw an error with wrong uuid', async function () {
+    it('accountDelete() should throw an error with wrong uuid', function () {
       expect(resolvers.Mutation.accountDelete).to.be.an('function');
-      const error = await resolvers.Mutation.accountDelete(null, {
+      return resolvers.Mutation.accountDelete(null, {
         uuid: 123456789
-      }, context);
-      expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.equal('unknown uuid');
+      }, context).then(() => {
+        throw new Error('oh wait !');
+      }).catch(error => {
+        expect(error).to.be.an.instanceof(Error);
+        expect(error.message).to.equal('unknown uuid');
+      });
     });
   });
 

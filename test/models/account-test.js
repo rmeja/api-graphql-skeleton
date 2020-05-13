@@ -85,7 +85,7 @@ describe('src/models/account.js', function () {
   });
 
   it('should find an account whith his uuid', function () {
-    return models.account.findById(uuidFakerAccount).then((account) => {
+    return models.account.findByPk(uuidFakerAccount).then((account) => {
       expect(account).to.be.an('object');
       expect(account).to.have.property('dataValues');
       expect(account.dataValues).to.have.all.keys(
@@ -101,7 +101,7 @@ describe('src/models/account.js', function () {
   });
 
   it('should update an account', function () {
-    return models.account.find({ where: { login: 'john@doe.fr' } }).then((account) => {
+    return models.account.findOne({ where: { login: 'john@doe.fr' } }).then((account) => {
       account.name = 'Dodoe';
       return account.update(account).then((account) => {
         expect(account).to.be.an('object');
@@ -121,7 +121,7 @@ describe('src/models/account.js', function () {
   });
 
   it('should check permission', function () {
-    return models.account.find({ where: { login: 'john@doe.fr' } }).then(account => {
+    return models.account.findOne({ where: { login: 'john@doe.fr' } }).then(account => {
       expect(account.hasPermissionTo).to.be.a('function');
       return account.hasPermissionTo('read account').then(canReadAccount => {
         expect(canReadAccount).to.be.a('boolean');
