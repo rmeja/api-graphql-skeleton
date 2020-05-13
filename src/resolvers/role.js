@@ -6,7 +6,7 @@ const resolvers = {
   Query: {
     roleById: combineResolvers(
       can('role:read'),
-      (_, { uuid }) => models.role.findById(uuid)
+      (_, { uuid }) => models.role.findByPk(uuid)
     ),
     roles: combineResolvers(
       can('role:read'),
@@ -26,7 +26,7 @@ const resolvers = {
             }
           }).then(permissions => {
             return role.setPermissions(permissions);
-          }).then(() => models.role.findById(role.uuid, {
+          }).then(() => models.role.findByPk(role.uuid, {
             include: [models.permission]
           }));
         });
@@ -35,7 +35,7 @@ const resolvers = {
     roleUpdate: combineResolvers(
       can('role:update'),
       (_, { uuid, input }) => {
-        return models.role.findById(uuid).then((role) => {
+        return models.role.findByPk(uuid).then((role) => {
           return role.update(input);
         }).then(role => {
           if (!input.permissionUuids) return role;
@@ -46,7 +46,7 @@ const resolvers = {
             }
           }).then(permissions => {
             return role.setPermissions(permissions);
-          }).then(() => models.role.findById(role.uuid, {
+          }).then(() => models.role.findByPk(role.uuid, {
             include: [models.permission]
           }));
         });
@@ -55,7 +55,7 @@ const resolvers = {
     roleDelete: combineResolvers(
       can('role:delete'),
       (_, { uuid }) => {
-        return models.role.findById(uuid).then((role) => {
+        return models.role.findByPk(uuid).then((role) => {
           if (!role) return Promise.reject(new Error('unknown uuid'));
           return role.destroy();
         });
