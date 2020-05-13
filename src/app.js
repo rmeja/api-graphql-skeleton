@@ -9,8 +9,8 @@ const argon2 = require('argon2');
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
+const graphqlHTTP = require('express-graphql');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const jwtOptions = {
@@ -61,17 +61,18 @@ app.use(logger('dev'));
 
 const typeDefs = require('./schemas');
 const resolvers = require('./resolvers');
-const { customFieldResolver } = require('./utils');
+// const { customFieldResolver } = require('./utils');
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 app.use(
   '/graphql',
   passport.authenticate('jwt', { session: false }),
-  graphqlExpress(request => {
+  graphqlHTTP(request => {
     return {
       schema,
+      root: resolvers,
       context: { request },
-      fieldResolver: customFieldResolver
+      graphiql: true
     };
   })
 );
@@ -80,19 +81,13 @@ const env = process.env.NODE_ENV || 'production';
 if (env === 'development') {
   app.use(
     '/graphql-test',
-    graphqlExpress(request => {
+    graphqlHTTP(request => {
       return {
         schema,
+        root: resolvers,
         context: { request },
-        fieldResolver: customFieldResolver
+        graphiql: true
       };
-    })
-  );
-
-  app.use(
-    '/graphiql',
-    graphiqlExpress({
-      endpointURL: '/graphql-test'
     })
   );
 }
