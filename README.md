@@ -23,23 +23,33 @@ Configure your environment variables (thanks to [dotenv](https://github.com/motd
 ```bash
 echo 'NODE_ENV=development' > .env
 ```
-Launch a [mariadb database container](https://hub.docker.com/_/mariadb/) 
-```bash
-docker run --name some-mariadb -p 3306:3306 -e  MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb
-```
-Fill your database with [sequelize-cli](http://docs.sequelizejs.com/manual/tutorial/migrations.html#running-seeds)
-```bash
-npm run sequelize db:seed:all
-```
-Empty your database
-```bash
-npm run sequelize db:seed:undo:all
-```
+
 Configure yours database access
 ```bash
 cp config/database.dist.json config/database.json
 editor config/database.json
 ```
+
+Launch a [mariadb database container](https://hub.docker.com/_/mariadb/) 
+```bash
+docker run --name some-mariadb -p 3306:3306 -e  MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb
+```
+
+Create your database with [sequelize-cli](https://github.com/sequelize/cli)
+```bash
+npm run sequelize db:create
+```
+
+Fill your database
+```bash
+npm run sequelize db:seed:all
+```
+
+Empty your database
+```bash
+npm run sequelize db:seed:undo:all
+```
+
 Launch you application and envoy
 ```bash
 npm run watch
