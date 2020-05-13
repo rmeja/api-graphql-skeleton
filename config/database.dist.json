@@ -5,13 +5,13 @@
     "database": "database_development",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": "no-op"
   },
   "test": {
     "database": "database_test",
     "dialect": "sqlite",
     "storage": "test.db",
-    "operatorsAliases": false,
+    "operatorsAliases": "no-op",
     "logging": false
   },
   "production": {
@@ -20,6 +20,6 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": "no-op"
   }
 }
