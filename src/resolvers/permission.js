@@ -6,7 +6,7 @@ const resolvers = {
   Query: {
     permissionById: combineResolvers(
       can('permission:read'),
-      (_, { uuid }) => models.permission.findById(uuid)
+      (_, { uuid }) => models.permission.findByPk(uuid)
     ),
     permissions: combineResolvers(
       can('permission:read'),

@@ -8,7 +8,7 @@ const resolvers = {
   Query: {
     accountById: combineResolvers(
       can('account:read'),
-      (_, { uuid }) => models.account.findById(uuid)
+      (_, { uuid }) => models.account.findByPk(uuid)
     ),
     accounts: combineResolvers(
       can('account:read'),
@@ -29,11 +29,11 @@ const resolvers = {
           return models.account.create(input).then((account) => ({ input, account }));
         }).then(({ input, account }) => {
           if (!input.roleUuid) return account;
-          return models.role.findById(input.roleUuid)
+          return models.role.findByPk(input.roleUuid)
             .then(role => account.setRole(role))
             .then(() => account);
         }).then(account => {
-          return models.account.findById(account.uuid, {
+          return models.account.findByPk(account.uuid, {
             include: [models.role]
           });
         });
@@ -42,7 +42,7 @@ const resolvers = {
     accountUpdate: combineResolvers(
       can('account:update'),
       (_, { uuid, input }) => {
-        return models.account.findById(uuid, {
+        return models.account.findByPk(uuid, {
           include: [models.role]
         }).then(account => {
           if (!input.password) return { input, account };
@@ -54,11 +54,11 @@ const resolvers = {
           return account.update(input).then((account) => ({ input, account }));
         }).then(({ input, account }) => {
           if (!input.roleUuid) return account;
-          return models.role.findById(input.roleUuid)
+          return models.role.findByPk(input.roleUuid)
             .then(role => account.setRole(role))
             .then(() => account);
         }).then(account => {
-          return models.account.findById(account.uuid, {
+          return models.account.findByPk(account.uuid, {
             include: [models.role]
           });
         });
@@ -67,7 +67,7 @@ const resolvers = {
     accountDelete: combineResolvers(
       can('account:delete'),
       (_, { uuid }) => {
-        return models.account.findById(uuid, {
+        return models.account.findByPk(uuid, {
           include: [models.role]
         }).then(account => {
           if (!account) return Promise.reject(new Error('unknown uuid'));
