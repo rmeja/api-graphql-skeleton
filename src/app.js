@@ -10,7 +10,7 @@ const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
 const { makeExecutableSchema } = require('graphql-tools');
-const graphqlHTTP = require('express-graphql');
+const { graphqlHTTP } = require('express-graphql');
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const jwtOptions = {
