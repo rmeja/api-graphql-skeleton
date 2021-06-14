@@ -5,6 +5,7 @@ addons:
   apt:
     packages:
     - build-essential
-
+cache:
+  npm: false
 before_script:
   - cp config/database.dist.json config/database.json
