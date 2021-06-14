@@ -1,6 +1,6 @@
 {
   "name": "api-graphql-skeleton",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "api graphql skeleton",
   "dependencies": {
     "argon2": "^0.28.2",
