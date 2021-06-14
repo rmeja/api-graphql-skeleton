@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - 14
+addons:
+  apt:
+    packages:
+    - build-essential
 
 before_script:
   - cp config/database.dist.json config/database.json
